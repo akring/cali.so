@@ -6,7 +6,6 @@ import { ClerkProvider } from '@clerk/nextjs'
 import type { Metadata, Viewport } from 'next'
 
 import { ThemeProvider } from '~/app/(main)/ThemeProvider'
-import favicon from '~/assets/favicon.png'
 import { url } from '~/lib'
 import { zhCN } from '~/lib/clerkLocalizations'
 import { sansFont } from '~/lib/font'
@@ -15,8 +14,9 @@ import { seo } from '~/lib/seo'
 export const metadata: Metadata = {
   metadataBase: seo.url,
   icons: {
-    icon: favicon.src,
-    apple: favicon.src,
+    icon: [{ url: '/favicon.png', type: 'image/png', sizes: 'any' }],
+    apple: [{ url: '/favicon.png', type: 'image/png', sizes: '180x180' }],
+    shortcut: '/favicon.png',
   },
   title: {
     template: '%s | Cali Castle',

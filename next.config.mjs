@@ -64,6 +64,14 @@ const nextConfig = {
   rewrites() {
     return [
       {
+        source: '/favicon.ico',
+        destination: '/favicon.png',
+      },
+      {
+        source: '/apple-touch-icon.png',
+        destination: '/favicon.png',
+      },
+      {
         source: '/feed',
         destination: '/feed.xml',
       },
