@@ -17,7 +17,7 @@ export const CURRENT_FOCUS_ITEMS: ReadonlyArray<FocusItem> = [
   },
   {
     title: 'ReadLater 项目',
-    detail: '商家冲刺中',
+    detail: '上架冲刺中',
   },
 ]
 
