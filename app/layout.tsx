@@ -81,6 +81,13 @@ export default function RootLayout({
         className={`${sansFont.variable} m-0 h-full p-0 font-sans antialiased`}
         suppressHydrationWarning
       >
+        <head>
+          <script
+            defer
+            src="https://umami.akring.com/script.js"
+            data-website-id="671cd127-5a59-4867-ad25-0da9bc110a67"
+          />
+        </head>
         <body className="flex h-full flex-col">
           <ThemeProvider
             attribute="class"
