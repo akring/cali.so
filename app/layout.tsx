@@ -93,6 +93,37 @@ export default function RootLayout({
             data-ackee-server="https://ackee.akring.com"
             data-ackee-domain-id="4980de88-47e9-4ddf-b0e9-dfa5b38c713e"
           />
+          {/* WebMCP: expose site tools to AI agents integrated into the browser */}
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                if (typeof navigator !== 'undefined' && navigator.modelContext) {
+                  navigator.modelContext.provideContext({
+                    tools: [
+                      {
+                        name: 'get_blog_posts',
+                        description: 'Get recent blog posts and articles from akring.com',
+                        inputSchema: { type: 'object', properties: {} },
+                        execute: async () => {
+                          const res = await fetch('/api/activity');
+                          return res.json();
+                        }
+                      },
+                      {
+                        name: 'get_page_as_markdown',
+                        description: 'Get the homepage content as markdown',
+                        inputSchema: { type: 'object', properties: {} },
+                        execute: async () => {
+                          const res = await fetch('/api/markdown');
+                          return res.text();
+                        }
+                      }
+                    ]
+                  }).catch(() => {});
+                }
+              `,
+            }}
+          />
         </head>
         <body className="flex h-full flex-col">
           <ThemeProvider

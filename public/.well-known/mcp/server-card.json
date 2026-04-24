@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "serverInfo": {
+    "name": "akring.com",
+    "version": "1.0.0",
+    "description": "Personal website of Akring - developer, designer, and creator. Features blog posts, projects, guestbook, and newsletters."
+  },
+  "capabilities": {
+    "tools": false,
+    "resources": false,
+    "prompts": false
+  }
+}

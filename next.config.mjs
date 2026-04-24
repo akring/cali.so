@@ -21,6 +21,28 @@ const nextConfig = {
     taint: true,
   },
 
+  async headers() {
+    return [
+      {
+        source: '/',
+        headers: [
+          {
+            key: 'Link',
+            value: [
+              '</.well-known/api-catalog>; rel="api-catalog"',
+              '</.well-known/agent-skills/index.json>; rel="agent-skills"',
+              '</.well-known/mcp/server-card.json>; rel="mcp-server-card"',
+            ].join(', '),
+          },
+          {
+            key: 'Vary',
+            value: 'Accept',
+          },
+        ],
+      },
+    ]
+  },
+
   redirects() {
     return [
       {
@@ -62,28 +84,38 @@ const nextConfig = {
   },
 
   rewrites() {
-    return [
-      {
-        source: '/favicon.ico',
-        destination: '/favicon.png',
-      },
-      {
-        source: '/apple-touch-icon.png',
-        destination: '/favicon.png',
-      },
-      {
-        source: '/feed',
-        destination: '/feed.xml',
-      },
-      {
-        source: '/rss',
-        destination: '/feed.xml',
-      },
-      {
-        source: '/rss.xml',
-        destination: '/feed.xml',
-      },
-    ]
+    return {
+      beforeFiles: [
+        // 当 Accept 头包含 text/markdown 时，返回 markdown 版本（RFC 7231 内容协商）
+        {
+          source: '/',
+          has: [{ type: 'header', key: 'accept', value: 'text/markdown' }],
+          destination: '/api/markdown',
+        },
+      ],
+      afterFiles: [
+        {
+          source: '/favicon.ico',
+          destination: '/favicon.png',
+        },
+        {
+          source: '/apple-touch-icon.png',
+          destination: '/favicon.png',
+        },
+        {
+          source: '/feed',
+          destination: '/feed.xml',
+        },
+        {
+          source: '/rss',
+          destination: '/feed.xml',
+        },
+        {
+          source: '/rss.xml',
+          destination: '/feed.xml',
+        },
+      ],
+    }
   },
 }
 

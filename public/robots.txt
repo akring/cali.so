@@ -1,0 +1,45 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /studio/
+Disallow: /sign-in/
+Disallow: /sign-up/
+
+User-agent: GPTBot
+Allow: /
+Disallow: /admin/
+Disallow: /studio/
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /admin/
+Disallow: /studio/
+
+User-agent: Claude-Web
+Allow: /
+Disallow: /admin/
+Disallow: /studio/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /admin/
+Disallow: /studio/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin/
+Disallow: /studio/
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /admin/
+Disallow: /studio/
+
+User-agent: Diffbot
+Allow: /
+Disallow: /admin/
+Disallow: /studio/
+
+Content-Signal: ai-train=no, search=yes, ai-input=no
+
+Sitemap: https://akring.com/sitemap.xml
