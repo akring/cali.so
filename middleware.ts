@@ -12,9 +12,41 @@ export const config = {
   matcher: ['/((?!_next|studio|.*\\..*).*)'],
 }
 
+function isBotRequest(req: NextRequest) {
+  const userAgent = req.headers.get('user-agent') || ''
+  const botPatterns = [
+    'bot',
+    'crawler',
+    'spider',
+    'scraper',
+    'scan',
+    'audit',
+    'lighthouse',
+    'pagespeed',
+    ' GTmetrix',
+    'Pingdom',
+    'seoscanners',
+    'security',
+    'wp-cron',
+    'curl',
+    'wget',
+    'python-requests',
+    'node-fetch',
+    'axios',
+    'postman',
+  ]
+  return botPatterns.some((pattern) =>
+    userAgent.toLowerCase().includes(pattern.toLowerCase())
+  )
+}
+
 async function beforeAuthMiddleware(req: NextRequest) {
   const { geo, nextUrl } = req
   const isApi = nextUrl.pathname.startsWith('/api/')
+
+  if (isBotRequest(req)) {
+    return NextResponse.next()
+  }
 
   if (process.env.EDGE_CONFIG) {
     const blockedIPs = await get<string[]>('blocked_ips')
