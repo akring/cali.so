@@ -40,12 +40,36 @@ function isBotRequest(req: NextRequest) {
   )
 }
 
+const PUBLIC_PATHS = [
+  '/',
+  '/blog',
+  '/projects',
+  '/guestbook',
+  '/newsletters',
+  '/about',
+  '/rss',
+  '/feed',
+  '/ama',
+  '/confirm',
+  '/api',
+  '/studio',
+]
+
+function isPublicPath(pathname: string) {
+  return PUBLIC_PATHS.some(
+    (p) => pathname === p || pathname.startsWith(p + '/') || pathname.startsWith(p + '?')
+  )
+}
+
 async function beforeAuthMiddleware(req: NextRequest) {
   const { geo, nextUrl } = req
   const isApi = nextUrl.pathname.startsWith('/api/')
 
-  if (isBotRequest(req)) {
-    return NextResponse.next()
+  // 无 session 的公开路由或 bot 请求直接跳过 Clerk 认证（必须返回 false，NextResponse.next() 不会跳过）
+  // 有 session cookie 的请求仍走 Clerk 正常流程，保证已登录用户的 auth() 上下文
+  const hasSession = req.cookies.has('__session') || req.cookies.has('__client_uat')
+  if ((isPublicPath(nextUrl.pathname) && !hasSession) || isBotRequest(req)) {
+    return false
   }
 
   if (process.env.EDGE_CONFIG) {
