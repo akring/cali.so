@@ -109,7 +109,8 @@ async function beforeAuthMiddleware(req: NextRequest) {
 }
 
 export default authMiddleware({
-  beforeAuth: beforeAuthMiddleware,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  beforeAuth: beforeAuthMiddleware as any,
   publicRoutes: [
     '/',
     '/studio(.*)',
