@@ -87,6 +87,12 @@ export default function RootLayout({
             src="https://umami.akring.com/script.js"
             data-website-id="671cd127-5a59-4867-ad25-0da9bc110a67"
           />
+          <script
+            async
+            src="https://ackee.akring.com/tracker.js"
+            data-ackee-server="https://ackee.akring.com"
+            data-ackee-domain-id="4980de88-47e9-4ddf-b0e9-dfa5b38c713e"
+          />
         </head>
         <body className="flex h-full flex-col">
           <ThemeProvider
