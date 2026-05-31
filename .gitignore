@@ -18,6 +18,10 @@
 # misc
 .DS_Store
 *.pem
+*.swp
+
+# pnpm store
+.pnpm-store/
 
 # debug
 npm-debug.log*
