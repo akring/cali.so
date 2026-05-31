@@ -1,4 +1,5 @@
 import { groq } from 'next-sanity'
+import { unstable_cache } from 'next/cache'
 
 import { getDate } from '~/lib/date'
 import { client } from '~/sanity/lib/client'
@@ -47,8 +48,12 @@ export const getLatestBlogPostsQuery = ({
       }
     }
   }`
-export const getLatestBlogPosts = (options: GetBlogPostsOptions) =>
-  client.fetch<Post[] | null>(getLatestBlogPostsQuery(options))
+export const getLatestBlogPosts = unstable_cache(
+  (options: GetBlogPostsOptions) =>
+    client.fetch<Post[] | null>(getLatestBlogPostsQuery(options)),
+  ['latest-blog-posts'],
+  { revalidate: 60 }
+)
 
 export const getBlogPostQuery = groq`
   *[_type == "post" && slug.current == $slug && !(_id in path("drafts.**"))][0] {
@@ -94,10 +99,14 @@ export const getBlogPostQuery = groq`
       },
     }
   }`
-export const getBlogPost = (slug: string) =>
-  client.fetch<PostDetail | undefined, { slug: string }>(getBlogPostQuery, {
-    slug,
-  })
+export const getBlogPost = unstable_cache(
+  (slug: string) =>
+    client.fetch<PostDetail | undefined, { slug: string }>(getBlogPostQuery, {
+      slug,
+    }),
+  ['blog-post'],
+  { revalidate: 60 }
+)
 
 export const getSettingsQuery = () =>
   groq`
@@ -118,17 +127,21 @@ export const getSettingsQuery = () =>
       "logo": logo.asset->url
     }
 }`
-export const getSettings = () =>
-  client.fetch<{
-    projects: Project[] | null
-    heroPhotos?: string[] | null
-    resume?:
-      | {
-          company: string
-          title: string
-          logo: string
-          start: string
-          end?: string
-        }[]
-      | null
-  }>(getSettingsQuery())
+export const getSettings = unstable_cache(
+  () =>
+    client.fetch<{
+      projects: Project[] | null
+      heroPhotos?: string[] | null
+      resume?:
+        | {
+            company: string
+            title: string
+            logo: string
+            start: string
+            end?: string
+          }[]
+        | null
+    }>(getSettingsQuery()),
+  ['settings'],
+  { revalidate: 60 }
+)

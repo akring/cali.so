@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 
 import { BlogPosts } from '~/app/(main)/blog/BlogPosts'
 import { CurrentFocus } from '~/app/(main)/CurrentFocus'
@@ -27,7 +27,9 @@ export default async function BlogHomePage() {
               <PencilSwooshIcon className="h-5 w-5 flex-none" />
               <span className="ml-2">近期文章</span>
             </h2>
-            <BlogPosts />
+            <Suspense fallback={<BlogPostsSkeleton />}>
+              <BlogPosts />
+            </Suspense>
           </div>
           <aside className="space-y-10 lg:sticky lg:top-8 lg:h-fit lg:pl-16 xl:pl-20">
             <CurrentFocus />
@@ -40,3 +42,16 @@ export default async function BlogHomePage() {
 }
 
 export const revalidate = 60
+
+function BlogPostsSkeleton() {
+  return (
+    <>
+      {Array.from({ length: 5 }).map((_, index) => (
+        <div
+          key={index}
+          className="aspect-[240/180] w-full animate-pulse rounded-3xl bg-zinc-100 ring-2 ring-zinc-100 dark:bg-zinc-800/60 dark:ring-zinc-800"
+        />
+      ))}
+    </>
+  )
+}
