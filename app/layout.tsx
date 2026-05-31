@@ -4,6 +4,7 @@ import './prism.css'
 
 import { ClerkProvider } from '@clerk/nextjs'
 import type { Metadata, Viewport } from 'next'
+import Script from 'next/script'
 
 import { ThemeProvider } from '~/app/(main)/ThemeProvider'
 import { url } from '~/lib'
@@ -74,6 +75,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+
   return (
     <ClerkProvider localization={zhCN}>
       <html
@@ -82,19 +84,21 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <head>
-          <script
-            defer
+          <Script
             src="https://umami.akring.com/script.js"
             data-website-id="671cd127-5a59-4867-ad25-0da9bc110a67"
+            strategy="lazyOnload"
           />
-          <script
-            async
+          <Script
             src="https://ackee.akring.com/tracker.js"
             data-ackee-server="https://ackee.akring.com"
             data-ackee-domain-id="4980de88-47e9-4ddf-b0e9-dfa5b38c713e"
+            strategy="lazyOnload"
           />
           {/* WebMCP: expose site tools to AI agents integrated into the browser */}
-          <script
+          <Script
+            id="webmcp-tools"
+            strategy="lazyOnload"
             dangerouslySetInnerHTML={{
               __html: `
                 if (typeof navigator !== 'undefined' && navigator.modelContext) {
