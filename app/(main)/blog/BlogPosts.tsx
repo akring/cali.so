@@ -6,7 +6,9 @@ import { getLatestBlogPosts } from '~/sanity/queries'
 import { BlogPostCard } from './BlogPostCard'
 
 export async function BlogPosts({ limit = 5 }) {
+  console.time('home:getLatestBlogPosts')
   const posts = await getLatestBlogPosts({ limit, forDisplay: true }) || []
+  console.timeEnd('home:getLatestBlogPosts')
   const postIdKeys = posts.map(({ _id }) => kvKeys.postViews(_id))
 
   let views: number[] = []
@@ -14,7 +16,9 @@ export async function BlogPosts({ limit = 5 }) {
     views = posts.map(() => Math.floor(Math.random() * 1000))
   } else {
     if (postIdKeys.length > 0) {
+      console.time('home:redisViews')
       views = await redis.mget<number[]>(...postIdKeys)
+      console.timeEnd('home:redisViews')
     }
   }
 
