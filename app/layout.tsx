@@ -20,11 +20,11 @@ export const metadata: Metadata = {
     shortcut: '/favicon.png',
   },
   title: {
-    template: '%s | Cali Castle',
+    template: '%s | Akring',
     default: seo.title,
   },
   description: seo.description,
-  keywords: 'Cali,Cali Castle,郭晓楠,佐玩,创始人,CEO,开发者,设计师,细节控,创新',
+  keywords: 'Akring,独立开发者,创作者,细节控,长期主义者,macOS,iOS',
   manifest: '/site.webmanifest',
   robots: {
     index: true,
@@ -40,17 +40,17 @@ export const metadata: Metadata = {
   openGraph: {
     title: {
       default: seo.title,
-      template: '%s | Cali Castle',
+      template: '%s | Akring',
     },
     description: seo.description,
-    siteName: 'Cali Castle',
+    siteName: 'Akring',
     locale: 'zh_CN',
     type: 'website',
-    url: 'https://cali.so',
+    url: 'https://akring.com',
   },
   twitter: {
-    site: '@thecalicastle',
-    creator: '@thecalicastle',
+    site: '@ddflj3310',
+    creator: '@ddflj3310',
     card: 'summary_large_image',
     title: seo.title,
     description: seo.description,
