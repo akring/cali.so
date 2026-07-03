@@ -7,7 +7,6 @@ import type { Metadata, Viewport } from 'next'
 import Script from 'next/script'
 
 import { ThemeProvider } from '~/app/(main)/ThemeProvider'
-import { url } from '~/lib'
 import { zhCN } from '~/lib/clerkLocalizations'
 import { sansFont } from '~/lib/font'
 import { seo } from '~/lib/seo'
@@ -56,7 +55,7 @@ export const metadata: Metadata = {
     description: seo.description,
   },
   alternates: {
-    canonical: url('/'),
+    canonical: seo.url,
     types: {
       'application/rss+xml': [{ url: 'rss', title: 'RSS 订阅' }],
     },
